@@ -14,9 +14,7 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-      in
-      {
-        packages.default = pkgs.rustPlatform.buildRustPackage {
+        linehash-edit = pkgs.rustPlatform.buildRustPackage {
           pname = "linehash-edit";
           version = "0.1.0";
           src = linehash-edit-src;
@@ -25,6 +23,11 @@
             allowBuiltinFetchGit = true;
           };
         };
+      in
+      {
+        packages.default = linehash-edit;
+        packages.linehash-edit = linehash-edit;
+        packages.le = linehash-edit;
 
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [ cargo rustc rustfmt clippy ];
